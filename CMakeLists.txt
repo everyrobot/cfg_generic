@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(leptrino_force_torque)
-
+project(er_tactile)
+add_compile_options(-std=c++11)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS geometry_msgs roscpp)
+find_package(catkin REQUIRED COMPONENTS geometry_msgs roscpp rospy dynamic_reconfigure)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -18,7 +18,9 @@ find_package(catkin REQUIRED COMPONENTS geometry_msgs roscpp)
 #######################################
 ## Declare ROS messages and services ##
 #######################################
-
+generate_dynamic_reconfigure_options(
+  cfg/er_tactile_parameters.cfg
+)
 ## Generate messages in the 'msg' folder
 # add_message_files(
 #   FILES
@@ -71,17 +73,14 @@ include_directories(include
 #)
 
 ## Declare a cpp executable
-add_executable(${PROJECT_NAME}
-  src/leptrino_force_torque.cpp
-  src/rs_comm.cpp
-)
+add_executable(er_tactile_node src/er_tactile_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(leptrino_force_torque_node leptrino_force_torque_generate_messages_cpp)
+add_dependencies(er_tactile_node ${PROJECT_NAME}_gencfg)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(er_tactile_node
   ${catkin_LIBRARIES}
 )
 

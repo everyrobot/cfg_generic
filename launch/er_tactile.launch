@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="er_tactile" type="er_tactile_node" name="er_tactile_node" output="screen">
+    <rosparam file="$(find er_tactile)/cfg/er_tactile_parameters_static.yaml" command="load"/>
+  </node>
+  <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure"/>
+</launch>  
+ 
